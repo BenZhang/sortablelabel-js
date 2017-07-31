@@ -59,28 +59,29 @@ class @SortableLabel
 
   calLabel: (target) ->
     _this = this
-    console.log(@target.selector)
     $(@target.selector).each(->
       stepCount = 1
-      console.log($(this).find(target))
       $(this).find(target).each( ->
         if typeof(_this.options['label']) == 'string'
-          if _this.options['label'].trim() == 'Day'          
-            $(this).closest('.fields').find(_this.options['labelTarget']).html(_this.dayOfWeek(stepCount - 1))            
+          if _this.options['label'].trim() == 'Day'
+            $(this).closest('.fields').find(_this.options['labelTarget']).html(_this.dayOfWeek(stepCount - 1))   
+            stepCount += 1         
           else
-            $(this).closest('.fields').find(_this.options['labelTarget']).html(_this.options['label'] + stepCount)
-          # console.log($(this), stepCount, $(this).closest('.fields').find(_this.options['labelTarget']).html())
+            if _this.options['fieldName']
+              if $(this).closest('.fields').find('.remove_nested_fields').data('association') == _this.options['fieldName']
+                $(this).closest('.fields').find(_this.options['labelTarget']).html(_this.options['label'] + stepCount)
+                stepCount += 1
+            else
+              throw "Field name can't be empty!"
         else if typeof(_this.options['label']) == 'function'
-          # console.log($(this))
-          # console.log(_this.options['labelTarget'])
-          # console.log($(this).closest('.fields'))
           $(this).closest('.fields').find(_this.options['labelTarget']).html(_this.options['label'].call($(this).closest('.fields').find(_this.options['labelTarget']), stepCount))
+          stepCount += 1
         $(this).closest('.fields').find(_this.options['positionTarget']).val(stepCount)
         if _this.options['minimun'] >= stepCount
           $(this).closest('.fields').find('.remove_nested_fields').hide();
         else
           $(this).closest('.fields').find('.remove_nested_fields').show();
-        stepCount += 1
+        
       )      
     )
 
