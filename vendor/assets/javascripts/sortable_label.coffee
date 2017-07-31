@@ -5,6 +5,7 @@ class @SortableLabel
     labelTarget: 'label'
     positionTarget: '.position-field'
     nestedTarget: null
+    removeField: "input[id$='_destroy']"
     label: 'Step '
     minimun: 0
 
@@ -47,25 +48,33 @@ class @SortableLabel
     )
 
   calInitStepLable: ->
-    this.calLabel(this.options['labelTarget'])
-    this.calWeekGroupLabel(this.options['weekGroupLabelTarget'])
+    this.calLabel(this.options['removeField']+'[value=false]')
+    if this.options['weekGroupLabelTarget']
+      this.calWeekGroupLabel(this.options['weekGroupLabelTarget'])
 
   calStepLable: ->
-    this.calLabel(this.options['labelTarget']+':visible')
-    this.calWeekGroupLabel(this.options['weekGroupLabelTarget']+':visible')
+    this.calLabel(this.options['removeField']+'[value=false]')
+    if this.options['weekGroupLabelTarget']
+      this.calWeekGroupLabel(this.options['weekGroupLabelTarget'])
 
   calLabel: (target) ->
     _this = this
+    console.log(@target.selector)
     $(@target.selector).each(->
       stepCount = 1
+      console.log($(this).find(target))
       $(this).find(target).each( ->
         if typeof(_this.options['label']) == 'string'
           if _this.options['label'].trim() == 'Day'          
-            $(this).html(_this.dayOfWeek(stepCount - 1))            
+            $(this).closest('.fields').find(_this.options['labelTarget']).html(_this.dayOfWeek(stepCount - 1))            
           else
-            $(this).html(_this.options['label'] + stepCount)
+            $(this).closest('.fields').find(_this.options['labelTarget']).html(_this.options['label'] + stepCount)
+          # console.log($(this), stepCount, $(this).closest('.fields').find(_this.options['labelTarget']).html())
         else if typeof(_this.options['label']) == 'function'
-          $(this).html(_this.options['label'].call(this, stepCount))
+          # console.log($(this))
+          # console.log(_this.options['labelTarget'])
+          # console.log($(this).closest('.fields'))
+          $(this).closest('.fields').find(_this.options['labelTarget']).html(_this.options['label'].call($(this).closest('.fields').find(_this.options['labelTarget']), stepCount))
         $(this).closest('.fields').find(_this.options['positionTarget']).val(stepCount)
         if _this.options['minimun'] >= stepCount
           $(this).closest('.fields').find('.remove_nested_fields').hide();
