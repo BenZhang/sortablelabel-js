@@ -1,0 +1,19 @@
+{
+  "name": "sortlabel",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/karma/bin/karma start my.conf.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jasmine-core": "^2.7.0",
+    "karma": "^1.7.0",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-coffee-preprocessor": "^1.0.1",
+    "karma-jasmine": "^1.1.0",
+    "karma-jasmine-jquery": "^0.1.1"
+  }
+}
