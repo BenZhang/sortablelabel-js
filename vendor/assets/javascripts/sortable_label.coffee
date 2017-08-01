@@ -49,12 +49,12 @@ class @SortableLabel
   calInitStepLable: ->
     this.calLabel(this.options['removeField']+'[value=false]')
     if this.options['weekGroupLabelTarget']
-      this.calWeekGroupLabel(this.options['weekGroupLabelTarget'])
+      this.calWeekGroupLabel(this.options['weekGroupLabelTarget'], true)
 
   calStepLable: ->
     this.calLabel(this.options['removeField']+'[value=false]')
     if this.options['weekGroupLabelTarget']
-      this.calWeekGroupLabel(this.options['weekGroupLabelTarget'])
+      this.calWeekGroupLabel(this.options['weekGroupLabelTarget'], false)
 
   calLabel: (target) ->
     _this = this
@@ -84,21 +84,26 @@ class @SortableLabel
       )      
     )
 
-  calWeekGroupLabel: (target) ->
+  calWeekGroupLabel: (target, is_first) ->
     _this = this
     week_group_label_list = []
-    $(@target.selector).each(->
+    $(@target).each(->
       $(this).find(target).each(->
-        _index = _this.isIncludeWeekGroup($(this).text(), week_group_label_list)
+        tempLabel = ''
+        if is_first
+          tempLabel = $(this).text()
+        else
+          tempLabel = $(this).text().substr(0, $(this).text().lastIndexOf(' '))
+        _index = _this.isIncludeWeekGroup(tempLabel, week_group_label_list)
         if _index is -1
           week_group_label_list.push(
-            name: $(this).text(),
+            name: tempLabel,
             count: 1
           )
-          $(this).html("<i class='fa fa-trophy fa-fw small-opacity-30'></i>"+$(this).text()+" 1")
+          $(this).html("<i class='fa fa-trophy fa-fw small-opacity-30'></i>" + tempLabel + " 1")
         else if _index > -1
           week_group_label_list[_index].count += 1
-          $(this).html("<i class='fa fa-trophy fa-fw small-opacity-30'></i>"+$(this).text()+" "+week_group_label_list[_index].count)
+          $(this).html("<i class='fa fa-trophy fa-fw small-opacity-30'></i>" + tempLabel + " " + week_group_label_list[_index].count)
       )
     )
 
