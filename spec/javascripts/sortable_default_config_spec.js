@@ -65,4 +65,25 @@ describe("default config test", function() {
     });
   });
 
+  it("nested objects", function() {
+    $('#test-part2').sortbleLabel({
+      fieldName: 'test_field2',
+      labelTarget: 'label[rel=2]',
+      nestedTarget: function() {
+        $('.test-part3').sortableLabel({
+          fieldName: 'nested_test_field',
+          labelTarget: 'label[rel=3]'
+        });
+      }      
+    });
+
+    var allElements = $('.test-part3 .fields');
+    $(allElements[2]).insertBefore($(allElements[0]));
+
+    $('#test-part2')..trigger('sortableLabel:refresh');
+
+    console.log($('#test-part2').html());
+
+
+  });
 });
