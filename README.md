@@ -33,3 +33,17 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/sortablelabel-js.
+
+
+
+## How to run test
+
+#### Step 1
+```
+npm run-script plugin
+```
+
+#### Step 2
+```
+npm test
+```
