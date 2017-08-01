@@ -16,6 +16,7 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       'bower_components/jquery/dist/jquery.js',
+      'bower_components/jquery-ui/jquery-ui.js',
       'bower_components/jquery-sortable/source/js/jquery-sortable.js',
       'bower_components/jasmine-jquery/lib/jasmine-jquery.js',
       'spec/javascripts/*.js',

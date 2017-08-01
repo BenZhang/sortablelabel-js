@@ -13,7 +13,6 @@ class @SortableLabel
     @options   = $.extend({}, defaults, options)
     @target    = scope
     @targetId  = @options['fieldName'] || @target.attr('id')
-    
     @calInitStepLable()
 
     $(document).on("nested:fieldAdded:#{@targetId}", (event) =>
@@ -59,7 +58,7 @@ class @SortableLabel
 
   calLabel: (target) ->
     _this = this
-    $(@target.selector).each(->
+    $(@target).each(->
       stepCount = 1
       $(this).find(target).each( ->
         if typeof(_this.options['label']) == 'string'
