@@ -4,6 +4,7 @@ describe("default config test", function() {
     loadFixtures("sortable_default.html");
   });
 
+  // Standard test
   it("default config sortable test", function() {
     $('#test-part').sortableLabel({
       fieldName: "test_field"
@@ -25,6 +26,7 @@ describe("default config test", function() {
 
   });
 
+  // 'Day' label test
   it("sortable options label is Day", function() {
   	var weekday = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
   	$('#test-part').sortableLabel({
@@ -42,6 +44,7 @@ describe("default config test", function() {
     });
   });
 
+  // Add and delete label test
   it("has deleted label", function() {
   	$('#test-part .fields').last().append("<div class='fields' id='5'><label></label><a class='remove_nested_fields' data-association='test_field'></a><input id='5_destroy' value='false'><input class='position-field'></div>");
 
@@ -64,6 +67,7 @@ describe("default config test", function() {
     });
   });
 
+  // Nested label test
   it("nested objects", function() {
     $('#test-part2').sortableLabel({
       fieldName: 'test_field2',
@@ -98,4 +102,33 @@ describe("default config test", function() {
     expect(targetNestedId).toBe(expectedNestedId);   
 
   });
+
+  // Workout group label test
+  it("workout group label", function() {
+    $('#test-part4').sortableLabel({
+      fieldName: 'test_field',
+      labelTarget: 'label[rel=m]',
+      weekGroupLabelTarget: '.test_group_label'
+    });
+
+    var allElements = $('#test-part4 .fields');
+    $(allElements[2]).insertBefore($(allElements[0])).trigger('sortableLabel:refresh');
+
+    var expectedWorkoutGroupId = '3124',
+        targetWorkoutGroupId = '',
+        expectedGroupLabel = 'A 1A 2B 1B 2',
+        targetGroupLabel = '';
+
+    $('#test-part4 .test_group_label').each(function(index, item) {
+      targetWorkoutGroupId += $(item).attr('id');
+      targetGroupLabel += $(item).text();
+    });
+
+    expect(targetWorkoutGroupId).toBe(expectedWorkoutGroupId);
+    expect(targetGroupLabel).toBe(expectedGroupLabel);
+
+
+
+  });
+
 });

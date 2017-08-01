@@ -1,11 +1,11 @@
 {
   "name": "sortlabel",
-  "description": "",
+  "description": "Sortable label js dependencies",
   "main": "index.js",
   "authors": [
     "Joe <ashzhouyue@gmail.com>"
   ],
-  "license": "ISC",
+  "license": "MIT",
   "homepage": "",
   "ignore": [
     "**/.*",
