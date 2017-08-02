@@ -49,12 +49,12 @@ class @SortableLabel
   calInitStepLable: ->
     this.calLabel(this.options['removeField']+'[value=false]')
     if this.options['weekGroupLabelTarget']
-      this.calWeekGroupLabel(this.options['weekGroupLabelTarget'], true)
+      this.calWeekGroupLabel(this.options['weekGroupLabelTarget'])
 
   calStepLable: ->
     this.calLabel(this.options['removeField']+'[value=false]')
     if this.options['weekGroupLabelTarget']
-      this.calWeekGroupLabel(this.options['weekGroupLabelTarget'], false)
+      this.calWeekGroupLabel(this.options['weekGroupLabelTarget'])
 
   calLabel: (target) ->
     _this = this
@@ -84,16 +84,12 @@ class @SortableLabel
       )      
     )
 
-  calWeekGroupLabel: (target, is_first) ->
+  calWeekGroupLabel: (target) ->
     _this = this
     week_group_label_list = []
     $(@target).each(->
       $(this).find(target).each(->
-        tempLabel = ''
-        if is_first
-          tempLabel = $(this).text()
-        else
-          tempLabel = $(this).text().substr(0, $(this).text().lastIndexOf(' '))
+        tempLabel = $(this).text()
         _index = _this.isIncludeWeekGroup(tempLabel, week_group_label_list)
         if _index is -1
           week_group_label_list.push(
@@ -108,7 +104,7 @@ class @SortableLabel
     )
 
   isIncludeWeekGroup: (item, arr)->
-    if item == " "
+    if item == " " || item.trim() == ""
       return -2
     for _item, index in arr
       return index if _item.name is item
