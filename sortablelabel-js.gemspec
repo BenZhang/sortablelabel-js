@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "sortablelabel/js/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "sortablelabel_js"
+  spec.name          = "sortablelabel-js"
   spec.version       = Sortablelabel::Js::VERSION
   spec.authors       = ["Joe"]
   spec.email         = ["ashzhouyue@gmail.com"]
