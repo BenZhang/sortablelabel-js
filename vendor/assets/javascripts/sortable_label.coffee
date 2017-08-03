@@ -64,7 +64,7 @@ class @SortableLabel
         $(this).closest('.fields').find(_this.options['positionTarget']).val(stepCount)
         if typeof(_this.options['label']) == 'string'
           if _this.options['label'].trim() == 'Day'       
-            $(this).closest('.fields').find(_this.options['labelTarget']).html(_this.dayOfWeek(stepCount))
+            $(this).closest('.fields').find(_this.options['labelTarget']).html(_this.dayOfWeek(stepCount - 1))
             stepCount += 1   
           else
             if _this.options['fieldName']
