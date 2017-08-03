@@ -61,13 +61,14 @@ class @SortableLabel
     $(@target).each(->
       stepCount = 1
       $(this).find(target).each( ->
+        $(this).closest('.fields').find(_this.options['positionTarget']).val(stepCount)
         if typeof(_this.options['label']) == 'string'
-          if _this.options['label'].trim() == 'Day'
-            $(this).closest('.fields').find(_this.options['labelTarget']).html(_this.dayOfWeek(stepCount - 1))   
-            stepCount += 1         
+          if _this.options['label'].trim() == 'Day'       
+            $(this).closest('.fields').find(_this.options['labelTarget']).html(_this.dayOfWeek(stepCount))
+            stepCount += 1   
           else
             if _this.options['fieldName']
-              if $(this).closest('.fields').find('.remove_nested_fields').data('association') == _this.options['fieldName']
+              if $(this).parent().find('.remove_nested_fields').data('association') == _this.options['fieldName']
                 $(this).closest('.fields').find(_this.options['labelTarget']).html(_this.options['label'] + stepCount)
                 stepCount += 1
             else
@@ -75,7 +76,6 @@ class @SortableLabel
         else if typeof(_this.options['label']) == 'function'
           $(this).closest('.fields').find(_this.options['labelTarget']).html(_this.options['label'].call($(this).closest('.fields').find(_this.options['labelTarget']), stepCount))
           stepCount += 1
-        $(this).closest('.fields').find(_this.options['positionTarget']).val(stepCount)
         if _this.options['minimun'] >= stepCount
           $(this).closest('.fields').find('.remove_nested_fields').hide();
         else

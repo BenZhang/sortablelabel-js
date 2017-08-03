@@ -19,10 +19,17 @@ describe("default config test", function() {
 
     var expectedIdList = '3124',
     		targetIdList = '';
-    $('#test-part .fields').each(function(inedx, item) {
+    $('#test-part .fields').each(function(index, item) {
     	targetIdList += String($(item).attr('id'));
     });
     expect(targetIdList).toBe(expectedIdList);
+
+    var expectedPositionFieldVal = '1234',
+        targetPositionFieldVal = '';
+    $('#test-part .fields .position-field').each(function(index, item) {
+      targetPositionFieldVal += $(item).val();
+    });
+    expect(targetPositionFieldVal).toBe(expectedPositionFieldVal);
 
   });
 
@@ -42,6 +49,12 @@ describe("default config test", function() {
     $('#test-part .fields').each(function(inedx, item) {
     	targetIdList += String($(item).attr('id'));
     });
+    var expectedPositionFieldVal = '1234',
+        targetPositionFieldVal = '';
+    $('#test-part .fields .position-field').each(function(index, item) {
+      targetPositionFieldVal += $(item).val();
+    });
+    expect(targetPositionFieldVal).toBe(expectedPositionFieldVal);
   });
 
   // Add and delete label test
@@ -65,6 +78,13 @@ describe("default config test", function() {
     $('#test-part .fields:visible').each(function(inedx, item) {
     	targetIdList += String($(item).attr('id'));
     });
+    console.log($('#test-part').html());
+    var expectedPositionFieldVal = '1234',
+        targetPositionFieldVal = '';
+    $('#test-part .position-field').each(function(index, item) {
+      targetPositionFieldVal += $(item).val();
+    });
+    expect(targetPositionFieldVal).toBe(expectedPositionFieldVal);
   });
 
   // Nested label test
@@ -127,6 +147,5 @@ describe("default config test", function() {
 
   //   expect(targetWorkoutGroupId).toBe(expectedWorkoutGroupId);
   //   expect(targetGroupLabel).toBe(expectedGroupLabel);
-
   // });
 });
