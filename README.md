@@ -41,7 +41,7 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/ZYMori
 #### Step 1
 Install dependencies lib
 ```
-npm run-script plugin
+npm run-script dependency
 ```
 
 #### Step 2
