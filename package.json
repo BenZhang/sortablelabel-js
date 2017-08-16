@@ -4,7 +4,7 @@
   "description": "Extension of jquery-sortable javascript library",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/karma/bin/karma start my.conf.js",
+    "test": "./node_modules/karma/bin/karma start my.conf.js --reporters nyan",
     "dependency": "npm install | bower install"
   },
   "author": "",
@@ -16,6 +16,7 @@
     "karma-coffee-preprocessor": "^1.0.1",
     "karma-coverage": "^1.1.1",
     "karma-jasmine": "^1.1.0",
-    "karma-jasmine-jquery": "^0.1.1"
+    "karma-jasmine-jquery": "^0.1.1",
+    "karma-nyan-reporter": "^0.2.5"
   }
 }
