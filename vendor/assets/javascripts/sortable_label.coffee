@@ -61,26 +61,23 @@ class @SortableLabel
     $(@target).each(->
       stepCount = 1
       $(this).find(target).each( ->
-        $(this).closest('.fields').find(_this.options['positionTarget']).val(stepCount)
-        if typeof(_this.options['label']) == 'string'
-          if _this.options['label'].trim() == 'Day'       
-            $(this).closest('.fields').find(_this.options['labelTarget']).html(_this.dayOfWeek(stepCount - 1))
-            stepCount += 1   
-          else
-            if _this.options['fieldName']
-              if $(this).parent().find('.remove_nested_fields').data('association') == _this.options['fieldName']
-                $(this).closest('.fields').find(_this.options['labelTarget']).html(_this.options['label'] + stepCount)
-                stepCount += 1
-            else
-              throw "Field name can't be empty!"
-        else if typeof(_this.options['label']) == 'function'
-          $(this).closest('.fields').find(_this.options['labelTarget']).html(_this.options['label'].call($(this).closest('.fields').find(_this.options['labelTarget']), stepCount))
-          stepCount += 1
         if _this.options['minimun'] >= stepCount
           $(this).closest('.fields').find('.remove_nested_fields').hide();
         else
           $(this).closest('.fields').find('.remove_nested_fields').show();
-        
+        $(this).closest('.fields').find(_this.options['positionTarget']).val(stepCount)
+        if typeof(_this.options['label']) == 'string'
+          if _this.options['label'].trim() == 'Day'       
+            $(this).closest('.fields').find(_this.options['labelTarget']).html(_this.dayOfWeek(stepCount - 1))  
+          else
+            if _this.options['fieldName']
+              if $(this).parent().find('.remove_nested_fields').data('association') == _this.options['fieldName']
+                $(this).closest('.fields').find(_this.options['labelTarget']).html(_this.options['label'] + stepCount)
+            else
+              alert("Field name can't be empty!")
+        else if typeof(_this.options['label']) == 'function'
+          $(this).closest('.fields').find(_this.options['labelTarget']).html(_this.options['label'].call($(this).closest('.fields').find(_this.options['labelTarget']), stepCount))
+        stepCount += 1
       )      
     )
 
