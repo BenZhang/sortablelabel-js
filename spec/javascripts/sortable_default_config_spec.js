@@ -34,7 +34,8 @@ describe("default config test", function() {
   it("sortable options label is Day", function() {
   	var weekday = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
   	$('#test-part').sortableLabel({
-  		label: "Day"
+  		label: "Day",
+      fieldName: "test_field"
   	});  
     var allElements = $('#test-part .fields'),
         expectedIdList = ['3', '1', '2', '4'];

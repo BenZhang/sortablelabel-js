@@ -61,23 +61,24 @@ class @SortableLabel
     $(@target).each(->
       stepCount = 1
       $(this).find(target).each( ->
-        if _this.options['minimun'] >= stepCount
-          $(this).closest('.fields').find('.remove_nested_fields').hide();
-        else
-          $(this).closest('.fields').find('.remove_nested_fields').show();
-        $(this).closest('.fields').find(_this.options['positionTarget']).val(stepCount)
-        if typeof(_this.options['label']) == 'string'
-          if _this.options['label'].trim() == 'Day'       
-            $(this).closest('.fields').find(_this.options['labelTarget']).html(_this.dayOfWeek(stepCount - 1))  
+        if($(this).closest('.fields').siblings().find('.remove_nested_fields').data('association') == _this.options['fieldName'])
+          if _this.options['minimun'] >= stepCount
+            $(this).closest('.fields').find('.remove_nested_fields').hide();
           else
-            if _this.options['fieldName']
-              if $(this).parent().find('.remove_nested_fields').data('association') == _this.options['fieldName']
-                $(this).closest('.fields').find(_this.options['labelTarget']).html(_this.options['label'] + stepCount)
+            $(this).closest('.fields').find('.remove_nested_fields').show();
+          $(this).closest('.fields').find(_this.options['positionTarget']).val(stepCount)
+          if typeof(_this.options['label']) == 'string'
+            if _this.options['label'].trim() == 'Day'       
+              $(this).closest('.fields').find(_this.options['labelTarget']).html(_this.dayOfWeek(stepCount - 1))  
             else
-              alert("Field name can't be empty!")
-        else if typeof(_this.options['label']) == 'function'
-          $(this).closest('.fields').find(_this.options['labelTarget']).html(_this.options['label'].call($(this).closest('.fields').find(_this.options['labelTarget']), stepCount))
-        stepCount += 1
+              if _this.options['fieldName']
+                if $(this).parent().find('.remove_nested_fields').data('association') == _this.options['fieldName']
+                  $(this).closest('.fields').find(_this.options['labelTarget']).html(_this.options['label'] + stepCount)
+              else
+                alert("Field name can't be empty!")
+          else if typeof(_this.options['label']) == 'function'
+            $(this).closest('.fields').find(_this.options['labelTarget']).html(_this.options['label'].call($(this).closest('.fields').find(_this.options['labelTarget']), stepCount))
+          stepCount += 1
       )      
     )
 
@@ -86,27 +87,30 @@ class @SortableLabel
     week_group_label_list = []
     $(@target).each(->
       $(this).find(target).each(->
-        tempLabel = $(this).text()
-        _index = _this.isIncludeWeekGroup(tempLabel, week_group_label_list)
-        if _index is -1
-          week_group_label_list.push(
-            name: tempLabel,
-            count: 1
-          )
-          if typeof _this.options['subPositionTarget'] == 'string'
-            $(this).closest('.fields').find(_this.options['subPositionTarget']).val(1)
-          if typeof _this.options['groupLabel'] == 'string'
-            $(this).html("<i class='fa fa-trophy fa-fw small-opacity-30'></i>" + tempLabel + " " + _this.options['groupLabel'] + " 1")
-          else
-            $(this).html("<i class='fa fa-trophy fa-fw small-opacity-30'></i>" + tempLabel)
-        else if _index > -1
-          week_group_label_list[_index].count += 1
-          if typeof _this.options['subPositionTarget'] == 'string'
-            $(this).closest('.fields').find(_this.options['subPositionTarget']).val(week_group_label_list[_index].count)
-          if typeof _this.options['groupLabel'] == 'string'
-            $(this).html("<i class='fa fa-trophy fa-fw small-opacity-30'></i>" + tempLabel + " " + _this.options['groupLabel'] + " " + week_group_label_list[_index].count)
-          else
-            $(this).html("<i class='fa fa-trophy fa-fw small-opacity-30'></i>" + tempLabel)
+        tempLabel = $(this).closest('.fields').find('.workout_workout_weeks_workout_week_group_id select').find(":selected").text()
+        if $(this).closest('.fields').find('.workout_workout_weeks_workout_week_group_id select').find(":selected").val() != ""
+          _index = _this.isIncludeWeekGroup(tempLabel, week_group_label_list)
+          if _index is -1
+            week_group_label_list.push(
+              name: tempLabel,
+              count: 1
+            )
+            if typeof _this.options['subPositionTarget'] == 'string'
+              $(this).closest('.fields').find(_this.options['subPositionTarget']).val(1)
+            if typeof _this.options['groupLabel'] == 'string'
+              $(this).html("<i class='fa fa-trophy fa-fw small-opacity-30'></i>" + tempLabel + " " + _this.options['groupLabel'] + " 1")
+            else
+              $(this).html("<i class='fa fa-trophy fa-fw small-opacity-30'></i>" + tempLabel)
+          else if _index > -1
+            week_group_label_list[_index].count += 1
+            if typeof _this.options['subPositionTarget'] == 'string'
+              $(this).closest('.fields').find(_this.options['subPositionTarget']).val(week_group_label_list[_index].count)
+            if typeof _this.options['groupLabel'] == 'string'
+              $(this).html("<i class='fa fa-trophy fa-fw small-opacity-30'></i>" + tempLabel + " " + _this.options['groupLabel'] + " " + week_group_label_list[_index].count)
+            else
+              $(this).html("<i class='fa fa-trophy fa-fw small-opacity-30'></i>" + tempLabel)
+        else
+          $(this).html("<i class='fa fa-trophy fa-fw small-opacity-30'></i>")
       )
     )
 
