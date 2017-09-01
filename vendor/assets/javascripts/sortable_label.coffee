@@ -61,7 +61,7 @@ class @SortableLabel
     $(@target).each(->
       stepCount = 1
       $(this).find(target).each( ->
-        if($(this).closest('.fields').siblings().find('.remove_nested_fields').data('association') == _this.options['fieldName'])
+        if($(this).closest('.fields').find('.remove_nested_fields').data('association') == _this.options['fieldName'])
           if _this.options['minimun'] >= stepCount
             $(this).closest('.fields').find('.remove_nested_fields').hide();
           else
