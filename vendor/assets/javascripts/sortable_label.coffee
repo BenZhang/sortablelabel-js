@@ -13,6 +13,7 @@ class @SortableLabel
     @options   = $.extend({}, defaults, options)
     @target    = scope
     @targetId  = @options['fieldName'] || @target.attr('id')
+    @callback  = @options["callback"]
     @calInitStepLable()
 
     $(document).on("nested:fieldAdded:#{@targetId}", (event) =>
@@ -81,6 +82,8 @@ class @SortableLabel
           stepCount += 1
       )      
     )
+    if typeof(@callback) == 'function'
+      @callback();
 
   calWeekGroupLabel: (target) ->
     _this = this
