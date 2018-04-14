@@ -6,7 +6,7 @@ class @SortableLabel
     positionTarget: '.position-field'
     nestedTarget: null
     removeField: "input[id$='_destroy']"
-    label: 'Step '
+    label: null
     minimun: 0
 
   constructor: (scope, options) ->
@@ -166,6 +166,9 @@ class @SortableLabel
                 alert("Field name can't be empty!")
           else if typeof(_this.options['label']) == 'function'
             $(this).closest('.fields').find(_this.options['labelTarget']).html(_this.options['label'].call($(this).closest('.fields').find(_this.options['labelTarget']), stepCount))
+          else
+            labelContent = $(this).closest('.fields').find(_this.options['labelTarget']).text()
+            $(this).closest('.fields').find(_this.options['labelTarget']).html("#{labelContent} #{stepCount}")
           stepCount += 1
       )
     )
