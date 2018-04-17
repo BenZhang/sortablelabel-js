@@ -167,8 +167,10 @@ class @SortableLabel
           else if typeof(_this.options['label']) == 'function'
             $(this).closest('.fields').find(_this.options['labelTarget']).html(_this.options['label'].call($(this).closest('.fields').find(_this.options['labelTarget']), stepCount))
           else
-            labelContent = $(this).closest('.fields').find(_this.options['labelTarget']).text()
-            $(this).closest('.fields').find(_this.options['labelTarget']).html("#{labelContent} #{stepCount}")
+            if !$(this).closest('.fields').find(_this.options['labelTarget']).data('label')
+              labelContent = $(this).closest('.fields').find(_this.options['labelTarget']).text()
+              $(this).closest('.fields').find(_this.options['labelTarget']).data('label', labelContent)
+            $(this).closest('.fields').find(_this.options['labelTarget']).html("#{$(this).closest('.fields').find(_this.options['labelTarget']).data('label')} #{stepCount}")
           stepCount += 1
       )
     )
