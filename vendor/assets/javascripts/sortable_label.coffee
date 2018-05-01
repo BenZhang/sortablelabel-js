@@ -156,16 +156,18 @@ class @SortableLabel
             $(this).closest('.fields').find('.remove_nested_fields').show();
           $(this).closest('.fields').find(_this.options['positionTarget']).val(stepCount)
           if typeof(_this.options['label']) == 'string'
-            if _this.options['label'].trim() == 'Day'
-              $(this).closest('.fields').find(_this.options['labelTarget']).html(_this.dayOfWeek(stepCount - 1))
+            if _this.options['fieldName']
+              if $(this).parent().find('.remove_nested_fields').data('association') == _this.options['fieldName']
+                $(this).closest('.fields').find(_this.options['labelTarget']).html(_this.options['label'] + stepCount)
             else
-              if _this.options['fieldName']
-                if $(this).parent().find('.remove_nested_fields').data('association') == _this.options['fieldName']
-                  $(this).closest('.fields').find(_this.options['labelTarget']).html(_this.options['label'] + stepCount)
-              else
-                alert("Field name can't be empty!")
+              alert("Field name can't be empty!")
           else if typeof(_this.options['label']) == 'function'
             $(this).closest('.fields').find(_this.options['labelTarget']).html(_this.options['label'].call($(this).closest('.fields').find(_this.options['labelTarget']), stepCount))
+          else if _this.options['label'] == false
+            if !$(this).closest('.fields').find(_this.options['labelTarget']).data('label')
+              labelContent = $(this).closest('.fields').find(_this.options['labelTarget']).text()
+              $(this).closest('.fields').find(_this.options['labelTarget']).data('label', labelContent)
+            $(this).closest('.fields').find(_this.options['labelTarget']).html("#{$(this).closest('.fields').find(_this.options['labelTarget']).data('label')}")          
           else
             if !$(this).closest('.fields').find(_this.options['labelTarget']).data('label')
               labelContent = $(this).closest('.fields').find(_this.options['labelTarget']).text()
@@ -216,9 +218,6 @@ class @SortableLabel
     for _item, index in arr
       return index if _item.name is item
     return -1
-
-  dayOfWeek: (dayIndex) ->
-    ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"][dayIndex]
 
 (($) ->
   $.fn.sortableLabel = (options) ->
