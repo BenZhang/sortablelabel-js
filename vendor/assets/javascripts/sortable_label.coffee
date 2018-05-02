@@ -16,39 +16,42 @@ class @SortableLabel
     @stop_callback  = @options["stop"]
     @initSortByPosition()
     @calInitStepLable()
+    if $(".sortable-label-#{@targetId}").size == 0
+      $(document).on("nested:fieldAdded:#{@targetId}", (event) =>
+        @calStepLable()
+        if @options['nestedTarget']
+          @options['nestedTarget'].call(@target)
+      )
 
-    $(document).on("nested:fieldAdded:#{@targetId}", (event) =>
-      @calStepLable()
+      $(document).on("nested:fieldRemoved:#{@targetId}", (event) =>
+        @calStepLable()
+      )
+      
+    if !@target.hasClass("sortable-label-#{@targetId}")
+      @target.addClass("sortable-label-#{@targetId}")
+
+      @target.on('sortableLabel:refresh', =>
+        @target.sortable("enable")
+        @calStepLable()
+      )
+
       if @options['nestedTarget']
         @options['nestedTarget'].call(@target)
-    )
 
-    $(document).on("nested:fieldRemoved:#{@targetId}", (event) =>
-      @calStepLable()
-    )
+      @target.sortable(
+        items: @options['sortableItem']
+        placeholder: "ui-state-highlight"
+        start: (event, ui)->
+          $(this).find('.ui-state-highlight').css('height', $(ui.item).css('height'))
+        stop: =>
+          @calStepLable()
+          if typeof(@stop_callback) == 'function'
+            @stop_callback()
+      )
 
-    @target.on('sortableLabel:refresh', =>
-      @target.sortable("enable")
-      @calStepLable()
-    )
-
-    if @options['nestedTarget']
-      @options['nestedTarget'].call(@target)
-
-    @target.sortable(
-      items: @options['sortableItem']
-      placeholder: "ui-state-highlight"
-      start: (event, ui)->
-        $(this).find('.ui-state-highlight').css('height', $(ui.item).css('height'))
-      stop: =>
-        @calStepLable()
-        if typeof(@stop_callback) == 'function'
-          @stop_callback()
-    )
-
-    @target.on('sortableLabel:disable', =>
-      @target.sortable('disable')
-    )
+      @target.on('sortableLabel:disable', =>
+        @target.sortable('disable')
+      )
 
   # 1. ascending sort if all position fields are not provided
   # 2. ascending sort field elements which part of them are no provided position
