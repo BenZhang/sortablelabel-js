@@ -46,7 +46,7 @@ class @SortableLabel
         stop: =>
           @calStepLable()
           if typeof(@stop_callback) == 'function'
-            @stop_callback()
+            @stop_callback.call(@target)
       )
 
       @target.on('sortableLabel:disable', =>
@@ -176,8 +176,7 @@ class @SortableLabel
         stepCount += 1
     )
     if typeof(@stop_callback) == 'function'
-      @stop_callback();
-
+      @stop_callback.call(@target)
 
   calWeekGroupLabel: (target) ->
     _this = this
