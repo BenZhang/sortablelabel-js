@@ -15,16 +15,20 @@ class @SortableLabel
     @targetId  = @options['fieldName'] || @target.attr('id')
     @stop_callback  = @options["stop"]
     @initSortByPosition()
-    @calInitStepLable()
+    @calStepLable()
     if $(".sortable-label-#{@targetId}").size() == 0
       $(document).on("nested:fieldAdded:#{@targetId}", (event) =>
         @calStepLable()
+        if typeof(@stop_callback) == 'function'
+          @stop_callback.call(@target)
         if @options['nestedTarget']
           @options['nestedTarget'].call(@target)
       )
 
       $(document).on("nested:fieldRemoved:#{@targetId}", (event) =>
         @calStepLable()
+        if typeof(@stop_callback) == 'function'
+          @stop_callback.call(@target)
       )
       
     if !@target.hasClass("sortable-label-#{@targetId}")
@@ -136,11 +140,6 @@ class @SortableLabel
           _target.append(item.j_element)
         )
     )
-
-  calInitStepLable: ->
-    this.calLabel(this.options['removeField']+'[value=false]')
-    if this.options['weekGroupLabelTarget']
-      this.calWeekGroupLabel(this.options['weekGroupLabelTarget'])
 
   calStepLable: ->
     this.calLabel(this.options['removeField']+'[value=false]')
