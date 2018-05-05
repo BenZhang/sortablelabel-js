@@ -16,7 +16,7 @@ class @SortableLabel
     @stop_callback  = @options["stop"]
     @initSortByPosition()
     @calInitStepLable()
-    if $(".sortable-label-#{@targetId}").size == 0
+    if $(".sortable-label-#{@targetId}").size() == 0
       $(document).on("nested:fieldAdded:#{@targetId}", (event) =>
         @calStepLable()
         if @options['nestedTarget']
@@ -149,7 +149,7 @@ class @SortableLabel
 
   calLabel: (target) ->
     _this = this
-    $(@target).each(->
+    $(@target.selector).each(->
       stepCount = 1
       $(this).find(target).each( ->
         if($(this).closest('.fields').find('.remove_nested_fields').data('association') == _this.options['fieldName'])
@@ -185,7 +185,7 @@ class @SortableLabel
   calWeekGroupLabel: (target) ->
     _this = this
     week_group_label_list = []
-    $(@target).each(->
+    $(@target.selector).each(->
       $(this).find(target).each(->
         tempLabel = $(this).closest('.fields').find('.workout_workout_weeks_workout_week_group_id select').find(":selected").text()
         if $(this).closest('.fields').find('.workout_workout_weeks_workout_week_group_id select').find(":selected").val() != ""
