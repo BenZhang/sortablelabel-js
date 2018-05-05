@@ -30,38 +30,41 @@ class @SortableLabel
         if typeof(@stop_callback) == 'function'
           @stop_callback.call(@target)
       )
-      
-    if !@target.hasClass("sortable-label-#{@targetId}")
-      @target.addClass("sortable-label-#{@targetId}")
+    
+    @target.each((_, element)=>
+      target = $(element)
+      if !target.hasClass("sortable-label-#{@targetId}")
+        target.addClass("sortable-label-#{@targetId}")
 
-      @target.on('sortableLabel:refresh', =>
-        @target.sortable("enable")
-        @calStepLable()
-      )
-
-      if @options['nestedTarget']
-        @options['nestedTarget'].call(@target)
-
-      @target.sortable(
-        items: @options['sortableItem']
-        placeholder: "ui-state-highlight"
-        start: (event, ui)->
-          $(this).find('.ui-state-highlight').css('height', $(ui.item).css('height'))
-        stop: =>
+        target.on('sortableLabel:refresh', =>
+          target.sortable("enable")
           @calStepLable()
-          if typeof(@stop_callback) == 'function'
-            @stop_callback.call(@target)
-      )
+        )
 
-      @target.on('sortableLabel:disable', =>
-        @target.sortable('disable')
-      )
+        if @options['nestedTarget']
+          @options['nestedTarget'].call(@target)
+
+        target.sortable(
+          items: @options['sortableItem']
+          placeholder: "ui-state-highlight"
+          start: (event, ui)->
+            $(this).find('.ui-state-highlight').css('height', $(ui.item).css('height'))
+          stop: =>
+            @calStepLable()
+            if typeof(@stop_callback) == 'function'
+              @stop_callback.call(@target)
+        )
+
+        target.on('sortableLabel:disable', =>
+          target.sortable('disable')
+        )
+    )
 
   # 1. ascending sort if all position fields are not provided
   # 2. ascending sort field elements which part of them are no provided position
   initSortByPosition: () ->
     _option = @options
-    @target.each((i, sub_target) ->
+    @target.each((_, sub_target) ->
       all_fields = $(sub_target).find(_option['sortableItem'])
       _positionTarget = _option['positionTarget']
       all_remain_fields_info = []
@@ -71,7 +74,7 @@ class @SortableLabel
       if all_fields.length > 0
 
         # get the maxinum_position
-        all_fields.each((index, field_item) ->
+        all_fields.each((_, field_item) ->
           _position = $(field_item).find(_positionTarget).val()
           if _position && _position != '' && typeof _position != 'undefined'
             _position = parseInt(_position, 10)
@@ -80,7 +83,7 @@ class @SortableLabel
         )
 
         # in case that new added field position value is initialized as null or '' or undefined
-        all_fields.each((index, field_item) ->
+        all_fields.each((_, field_item) ->
           _position = $(field_item).find(_positionTarget).val()
           if !_position || _position == '' || typeof _position != 'undefined'
             maxium_position += 1
@@ -88,7 +91,7 @@ class @SortableLabel
         )
 
         # filter removed fields and remain fields
-        all_fields.each((index, field_item) ->
+        all_fields.each((_, field_item) ->
           _position = $(field_item).find(_positionTarget).val()
           _is_removed = $(field_item).find(_option['removeField']).val()
           if _is_removed == "false" || _is_removed == false
@@ -132,11 +135,11 @@ class @SortableLabel
             all_remain_fields_info[key].position = key + 1
 
         _target = $(sub_target)
-        all_remain_fields_info.forEach((item, index) ->
+        all_remain_fields_info.forEach((item, _) ->
           _target.append(item.j_element)
         )
 
-        all_removed_fields_info.forEach((item, index) ->
+        all_removed_fields_info.forEach((item, _) ->
           _target.append(item.j_element)
         )
     )

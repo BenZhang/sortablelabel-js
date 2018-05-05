@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    sortablelabel-js (2.1)
+    sortablelabel-js (2.2)
 
 GEM
   remote: https://rubygems.org/
