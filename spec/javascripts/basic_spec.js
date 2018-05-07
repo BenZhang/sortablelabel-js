@@ -22,6 +22,22 @@ describe("basic functionalities", function() {
 
   it("should be able to sort position and update labels according to existing positon values", function() {
     $('.tag-nested-workouts').sortableLabel({
+      fieldName: "workouts",
+      label: false
+    });
+
+    expect($('#field2-1 .position-field').val()).toBe('2')
+    expect($('#field2-2 .position-field').val()).toBe('1')
+    expect($('#field2-3 .position-field').val()).toBe('4')
+    expect($('#field2-4 .position-field').val()).toBe('3')
+    expect($('#field2-1 label').text()).toBe('No.')
+    expect($('#field2-2 label').text()).toBe('No.')
+    expect($('#field2-3 label').text()).toBe('No.')
+    expect($('#field2-4 label').text()).toBe('No.')
+  });
+
+  it("should be able to sort position and update labels according to existing positon values", function() {
+    $('.tag-nested-workouts').sortableLabel({
       fieldName: "workouts"
     });
 
