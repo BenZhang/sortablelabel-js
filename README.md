@@ -42,6 +42,7 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/ZYMori
 Install dependencies lib
 ```
 npm run-script dependency
+bower install
 ```
 
 #### Step 2
