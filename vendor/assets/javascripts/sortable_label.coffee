@@ -94,14 +94,14 @@ class @SortableLabel
         all_fields.each((_, field_item) ->
           _position = $(field_item).find(_positionTarget).val()
           _is_removed = $(field_item).find(_option['removeField']).val()
-          if _is_removed == "false" || _is_removed == false
-            _is_removed = "false"
+          if _is_removed == "false" || _is_removed == false || _is_removed == "0"
+            _is_removed = false
           else
-            _is_removed = "true"
+            _is_removed = true
 
           # removed fields should be filtered
           # only unremoved fields will be sorted
-          if _is_removed == 'true'
+          if _is_removed
             all_removed_fields_info.push({
               position: _position,
               j_element: field_item
