@@ -175,29 +175,21 @@ describe("basic functionalities", function() {
     expect($('#field1-4 label').text()).toBe('Step 2')
   });
 
-  // Workout group label test
+  it('should be able to handle function label', function(){
+    $('.tag-nested-workouts').sortableLabel({
+      label: function(index){
+        return "globalCounter-" + index;
+      },
+      fieldName: "workouts"
+    });
 
-  // it("workout group label", function() {
-  //   $('#test-part4').sortableLabel({
-  //     fieldName: 'test_field',
-  //     labelTarget: 'label[rel=m]',
-  //     weekGroupLabelTarget: '.test_group_label'
-  //   });
-
-  //   var allElements = $('#test-part4 .fields');
-  //   $(allElements[2]).insertBefore($(allElements[0])).trigger('sortableLabel:refresh');
-
-  //   var expectedWorkoutGroupId = '3124',
-  //       targetWorkoutGroupId = '',
-  //       expectedGroupLabel = 'A 1A 2B 1B 2',
-  //       targetGroupLabel = '';
-
-  //   $('#test-part4 .test_group_label').each(function(index, item) {
-  //     targetWorkoutGroupId += $(item).attr('id');
-  //     targetGroupLabel += $(item).text();
-  //   });
-
-  //   expect(targetWorkoutGroupId).toBe(expectedWorkoutGroupId);
-  //   expect(targetGroupLabel).toBe(expectedGroupLabel);
-  // });
+    expect($('#field1-1 .position-field').val()).toBe('1')
+    expect($('#field1-2 .position-field').val()).toBe('2')
+    expect($('#field1-3 .position-field').val()).toBe('3')
+    expect($('#field1-4 .position-field').val()).toBe('4')
+    expect($('#field1-1 label').text()).toBe('globalCounter-1')
+    expect($('#field1-2 label').text()).toBe('globalCounter-2')
+    expect($('#field1-3 label').text()).toBe('globalCounter-3')
+    expect($('#field1-4 label').text()).toBe('globalCounter-4')
+  });
 });
