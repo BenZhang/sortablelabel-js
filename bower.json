@@ -3,7 +3,7 @@
   "description": "Sortable label js dependencies",
   "main": "index.js",
   "authors": [
-    "Joe <ashzhouyue@gmail.com>"
+    "Ben <bzbnhang@gmail.com>"
   ],
   "license": "MIT",
   "homepage": "",
@@ -15,9 +15,9 @@
     "tests"
   ],
   "dependencies": {
-    "jquery": "^3.2.1",
-    "jasmine-jquery": "^2.1.1",
-    "jquery-sortable": "^0.9.13",
-    "jquery-ui": "^1.12.1"
+    "jquery": "1.11.1",
+    "jasmine-jquery": "2.1.1",
+    "jquery-sortable": "0.9.13",
+    "jquery-ui": "1.11.4"
   }
 }

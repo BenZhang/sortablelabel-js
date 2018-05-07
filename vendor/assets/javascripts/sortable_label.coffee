@@ -16,7 +16,7 @@ class @SortableLabel
     @stop_callback  = @options["stop"]
     @initSortByPosition()
     @calStepLable()
-    if $(".sortable-label-#{@targetId}").size() == 0
+    if $(".sortable-label-#{@targetId}").length == 0
       $(document).on("nested:fieldAdded:#{@targetId}", (event) =>
         @calStepLable()
         if typeof(@stop_callback) == 'function'
@@ -85,7 +85,7 @@ class @SortableLabel
         # in case that new added field position value is initialized as null or '' or undefined
         all_fields.each((_, field_item) ->
           _position = $(field_item).find(_positionTarget).val()
-          if !_position || _position == '' || typeof _position != 'undefined'
+          if !_position || _position == '' || typeof _position == 'undefined'
             maxium_position += 1
             $(field_item).find(_positionTarget).val(maxium_position)
         )
@@ -145,15 +145,16 @@ class @SortableLabel
     )
 
   calStepLable: ->
-    this.calLabel(this.options['removeField']+'[value=false]')
+    this.calLabel()
     if this.options['weekGroupLabelTarget']
       this.calWeekGroupLabel(this.options['weekGroupLabelTarget'])
 
-  calLabel: (target) ->
+  calLabel: ->
     _this = this
     $(@target.selector).each(->
       stepCount = 1
-      $(this).find(target).each( ->
+      $(this).find(_this.options['removeField']).each( ->
+        return if $(this).val() == 'true' || $(this).val() == '1'
         if($(this).closest('.fields').find('.remove_nested_fields').data('association') == _this.options['fieldName'])
           if _this.options['minimun'] >= stepCount
             $(this).closest('.fields').find('.remove_nested_fields').hide();
@@ -163,17 +164,12 @@ class @SortableLabel
           if typeof(_this.options['label']) == 'string'
             if _this.options['fieldName']
               if $(this).parent().find('.remove_nested_fields').data('association') == _this.options['fieldName']
-                $(this).closest('.fields').find(_this.options['labelTarget']).html(_this.options['label'] + stepCount)
+                $(this).closest('.fields').find(_this.options['labelTarget']).html("#{_this.options['label']} #{stepCount}")
             else
               alert("Field name can't be empty!")
           else if typeof(_this.options['label']) == 'function'
             $(this).closest('.fields').find(_this.options['labelTarget']).html(_this.options['label'].call($(this).closest('.fields').find(_this.options['labelTarget']), stepCount))
-          else if _this.options['label'] == false
-            if !$(this).closest('.fields').find(_this.options['labelTarget']).data('label')
-              labelContent = $(this).closest('.fields').find(_this.options['labelTarget']).text()
-              $(this).closest('.fields').find(_this.options['labelTarget']).data('label', labelContent)
-            $(this).closest('.fields').find(_this.options['labelTarget']).html("#{$(this).closest('.fields').find(_this.options['labelTarget']).data('label')}")          
-          else
+          else if _this.options['label'] != false
             if !$(this).closest('.fields').find(_this.options['labelTarget']).data('label')
               labelContent = $(this).closest('.fields').find(_this.options['labelTarget']).text()
               $(this).closest('.fields').find(_this.options['labelTarget']).data('label', labelContent)
